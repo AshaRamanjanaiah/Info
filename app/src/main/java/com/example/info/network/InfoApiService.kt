@@ -1,22 +1,20 @@
 package com.example.info.network
 
+import com.example.info.di.DaggerApiComponent
 import com.example.info.model.CanadaInfo
 import io.reactivex.Single
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 class InfoApiService{
-    private val BASE_URL = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/"
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .build()
-        .create(InfoApi::class.java)
+    @Inject
+    lateinit var api: InfoApi
+
+    init {
+        DaggerApiComponent.create().inject(this)
+    }
 
     fun getCanadaInfo(): Single<CanadaInfo> {
-        return retrofit.getInfo()
+        return api.getInfo()
     }
 }
