@@ -9,12 +9,12 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
-class ApiModule {
+open class ApiModule {
 
     private val BASE_URL = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/"
 
     @Provides
-    fun provideInfoApi(): InfoApi {
+    open fun provideInfoApi(): InfoApi {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -24,7 +24,7 @@ class ApiModule {
     }
 
     @Provides
-    fun provideInfoApiService(): InfoApiService {
+    open fun provideInfoApiService(): InfoApiService {
         return InfoApiService()
     }
 }

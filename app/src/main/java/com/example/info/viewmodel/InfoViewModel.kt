@@ -2,6 +2,7 @@ package com.example.info.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.info.di.ApiModule
 import com.example.info.di.DaggerViewModelComponent
 import com.example.info.model.CanadaInfo
 import com.example.info.model.Details
@@ -12,7 +13,11 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class InfoViewModel: ViewModel() {
+class InfoViewModel(): ViewModel() {
+
+    constructor(test: Boolean): this() {
+        injected = true
+    }
 
     val countryDetails by lazy { MutableLiveData<List<Details>>() }
     val title by lazy { MutableLiveData<String>() }
@@ -24,11 +29,19 @@ class InfoViewModel: ViewModel() {
 
     private val disposable = CompositeDisposable()
 
-    init {
-        DaggerViewModelComponent.create().inject(this)
+    private var injected = false
+
+    fun inject() {
+        if(!injected) {
+            DaggerViewModelComponent.builder()
+                .apiModule(ApiModule())
+                .build()
+                .inject(this)
+        }
     }
 
     fun refresh() {
+        inject()
         loading.value = true
         loadError.value =false
         getCountryDetails()
