@@ -1,54 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="details"
+            type="com.example.info.model.Details" />
+    </data>
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!-- A CardView that contains a TextView -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="0dp"
-        android:layout_marginTop="@dimen/dimen_5dp"
+        card_view:cardElevation="8dp"
+        android:layout_marginTop="10dp"
+        card_view:cardBackgroundColor="#D3D3D3"
         android:layout_marginLeft="@dimen/dimen_16dp"
         android:layout_marginRight="@dimen/dimen_16dp"
         android:layout_marginBottom="@dimen/dimen_5dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_16dp">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Information"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#1c4966"
+                android:text="@{details.title}"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dimen_5dp">
+
             <TextView
                 android:id="@+id/description"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:gravity="top"
+                android:text="@{details.description}"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/title" />
 
             <ImageView
                 android:id="@+id/placeImage"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher"
+                android:scaleType="center"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:gravity="top"
+                android:imageUrl="@{details.imageHref}"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toEndOf="@+id/description"
                 card_view:layout_constraintTop_toBottomOf="@+id/title" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>
+</layout>
