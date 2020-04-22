@@ -6,7 +6,7 @@
     <data>
         <variable
             name="details"
-            type="com.example.info.model.Details" />
+            type="com.project.info.model.Details" />
     </data>
 
 <LinearLayout
