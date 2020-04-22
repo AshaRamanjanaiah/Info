@@ -14,6 +14,8 @@ class DetailsAdapter(private val detailsList: ArrayList<Details>):
     fun updateDetailsList(newDetailsList: List<Details>) {
         detailsList.clear()
         detailsList.addAll(newDetailsList)
+        detailsList.removeIf { it.title.isNullOrEmpty() &&
+                it.description.isNullOrEmpty() && it.imageHref.isNullOrEmpty() }
         notifyDataSetChanged()
     }
 
@@ -28,7 +30,9 @@ class DetailsAdapter(private val detailsList: ArrayList<Details>):
 
     override fun onBindViewHolder(holder: DetailsViewHolder, position: Int) {
         holder.view.details = detailsList[position]
+
     }
 
     class DetailsViewHolder(var view: ItemDetailsBinding): RecyclerView.ViewHolder(view.root)
+
 }

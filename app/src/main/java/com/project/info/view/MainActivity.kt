@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         loading.visibility = if(isLoading) View.VISIBLE else View.GONE
         if (isLoading) {
             loadError.visibility = View.GONE
-            rowsList.visibility = View.GONE
         }
     }
 
@@ -44,11 +43,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         viewModel = ViewModelProviders.of(this).get(InfoViewModel::class.java)
-        viewModel.countryDetails.observe(this, countryDetailsDataObserver)
-        viewModel.title.observe(this, titleDataObserver)
+        viewModel.getDetails().observe(this, countryDetailsDataObserver)
+        viewModel.getAppTitle().observe(this, titleDataObserver)
         viewModel.loadError.observe(this, loadErrorObserver)
         viewModel.loading.observe(this, loadingObserver)
-        viewModel.refresh()
 
         rowsList.apply {
             layoutManager = LinearLayoutManager(context)
@@ -56,13 +54,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         refreshLayout.setOnRefreshListener {
-            rowsList.visibility = View.GONE
             loadError.visibility = View.GONE
-            loading.visibility = View.VISIBLE
             viewModel.refresh()
             refreshLayout.isRefreshing = false
         }
     }
-
 
 }

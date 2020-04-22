@@ -31,6 +31,11 @@ class InfoViewModel(): ViewModel() {
 
     private var injected = false
 
+    init {
+        refresh()
+        loading.value = true
+    }
+
     fun inject() {
         if(!injected) {
             DaggerViewModelComponent.builder()
@@ -42,9 +47,16 @@ class InfoViewModel(): ViewModel() {
 
     fun refresh() {
         inject()
-        loading.value = true
         loadError.value =false
         getCountryDetails()
+    }
+
+    fun getDetails(): MutableLiveData<List<Details>>{
+        return countryDetails
+    }
+
+    fun getAppTitle(): MutableLiveData<String> {
+        return title
     }
 
     private fun getCountryDetails() {
@@ -61,9 +73,12 @@ class InfoViewModel(): ViewModel() {
                     }
 
                     override fun onError(e: Throwable) {
-                        title.value = null
-                        countryDetails.value = null
-                        loadError.value = true
+                        if(!countryDetails.value.isNullOrEmpty()) {
+                            loadError.value = false
+                        } else {
+                            countryDetails.value = null
+                            loadError.value = true
+                        }
                         loading.value = false
                     }
 

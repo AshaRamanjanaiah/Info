@@ -1,83 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="details"
             type="com.project.info.model.Details" />
     </data>
 
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
-        android:layout_gravity="center"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="8dp"
-        android:layout_marginTop="10dp"
-        card_view:cardBackgroundColor="#D3D3D3"
-        android:layout_marginLeft="@dimen/dimen_16dp"
-        android:layout_marginRight="@dimen/dimen_16dp"
-        android:layout_marginBottom="@dimen/dimen_5dp">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/dimen_16dp">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="#1c4966"
-                android:text="@{details.title}"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_10dp"
+            android:layout_marginRight="@dimen/dimen_16dp"
+            android:layout_marginBottom="@dimen/dimen_5dp"
+            card_view:cardBackgroundColor="#D3D3D3"
+            card_view:cardCornerRadius="@dimen/card_radius"
+            card_view:cardElevation="@dimen/card_elevation">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/dimen_5dp">
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_16dp">
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="14sp"
-                android:textColor="#000000"
-                android:text="@{details.description}"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/title" />
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{details.title}"
+                    android:textColor="@color/card_background"
+                    android:textSize="@dimen/title_size"
+                    android:textStyle="bold"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/placeImage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:scaleType="center"
-                android:layout_weight="1"
-                android:paddingStart="10dp"
-                android:minHeight="50dp"
-                android:imageUrl="@{details.imageHref}"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/description"
-                card_view:layout_constraintTop_toBottomOf="@+id/title" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dimen_5dp">
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/placeImage"
+                        android:layout_weight="3"
+                        android:text="@{details.description}"
+                        android:textColor="@color/black_color"
+                        android:textSize="@dimen/description_text_size"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/title" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/dimen_5dp"
+                        android:layout_marginEnd="@dimen/dimen_5dp">
+
+                        <ImageView
+                            android:id="@+id/placeImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:imageUrl="@{details.imageHref}"
+                            android:minWidth="@dimen/min_width"
+                            android:minHeight="@dimen/min_height"
+                            android:scaleType="center"
+                            card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintStart_toEndOf="@+id/description"
+                            card_view:layout_constraintTop_toBottomOf="@+id/title" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+    </LinearLayout>
 </layout>
