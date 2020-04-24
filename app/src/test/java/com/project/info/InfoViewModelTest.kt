@@ -27,7 +27,7 @@ class InfoViewModelTest {
     @Mock
     lateinit var infoApiService: InfoApiService
 
-    val infoViewModel = InfoViewModel(true)
+    val infoViewModel by lazy { InfoViewModel(true) }
 
     @Before
     fun setup() {
@@ -69,14 +69,14 @@ class InfoViewModelTest {
 
     @Test
     fun getInfoFailure() {
-        val testSingle = Single.error<CanadaInfo>(Throwable())
-        Mockito.`when`(infoApiService.getCanadaInfo()).thenReturn(testSingle)
+        val testSingleError = Single.error<CanadaInfo>(Throwable())
+        Mockito.`when`(infoApiService.getCanadaInfo()).thenReturn(testSingleError)
 
         infoViewModel.refresh()
 
-        Assert.assertEquals(null, infoViewModel.countryDetails.value)
-        Assert.assertEquals(null, infoViewModel.title.value)
-        Assert.assertEquals(true, infoViewModel.loadError.value)
+        Assert.assertNotNull(infoViewModel.countryDetails.value)
+        Assert.assertNotNull(infoViewModel.title.value)
+        Assert.assertEquals(false, infoViewModel.loadError.value)
         Assert.assertEquals(false,infoViewModel.loading.value)
     }
 }

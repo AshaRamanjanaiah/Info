@@ -5,7 +5,7 @@ import com.project.info.model.CanadaInfo
 import io.reactivex.Single
 import javax.inject.Inject
 
-class InfoApiService{
+class InfoApiService {
 
     @Inject
     lateinit var api: InfoApi

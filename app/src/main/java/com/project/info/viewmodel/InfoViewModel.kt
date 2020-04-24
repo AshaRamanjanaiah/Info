@@ -13,9 +13,13 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class InfoViewModel(): ViewModel() {
+class InfoViewModel() : ViewModel() {
 
-    constructor(test: Boolean): this() {
+    /**
+     * This constructor is used for unit testing
+     * @param canInject boolean sets injected variable
+     */
+    constructor(canInject: Boolean) : this() {
         injected = true
     }
 
@@ -37,7 +41,7 @@ class InfoViewModel(): ViewModel() {
     }
 
     fun inject() {
-        if(!injected) {
+        if (!injected) {
             DaggerViewModelComponent.builder()
                 .apiModule(ApiModule())
                 .build()
@@ -45,13 +49,14 @@ class InfoViewModel(): ViewModel() {
         }
     }
 
+    // Refresh the content on MainActivity
     fun refresh() {
         inject()
-        loadError.value =false
+        loadError.value = false
         getCountryDetails()
     }
 
-    fun getDetails(): MutableLiveData<List<Details>>{
+    fun getDetails(): MutableLiveData<List<Details>> {
         return countryDetails
     }
 
@@ -59,12 +64,13 @@ class InfoViewModel(): ViewModel() {
         return title
     }
 
+    // This method makes network call, gets data and updated the content.
     private fun getCountryDetails() {
         disposable.add(
             infoApiService.getCanadaInfo()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object: DisposableSingleObserver<CanadaInfo>(){
+                .subscribeWith(object : DisposableSingleObserver<CanadaInfo>() {
                     override fun onSuccess(canadaInfo: CanadaInfo) {
                         title.value = canadaInfo.title
                         countryDetails.value = canadaInfo.details
@@ -73,7 +79,7 @@ class InfoViewModel(): ViewModel() {
                     }
 
                     override fun onError(e: Throwable) {
-                        if(!countryDetails.value.isNullOrEmpty()) {
+                        if (!countryDetails.value.isNullOrEmpty()) {
                             loadError.value = false
                         } else {
                             countryDetails.value = null
@@ -86,6 +92,7 @@ class InfoViewModel(): ViewModel() {
         )
     }
 
+    //Clearing disposable, it might cause memory leaks if not cleared.
     override fun onCleared() {
         super.onCleared()
         disposable.clear()

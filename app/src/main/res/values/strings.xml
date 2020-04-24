@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Info</string>
+    <string name="you_are_offline">You are offline</string>
 </resources>
